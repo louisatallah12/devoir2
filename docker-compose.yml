@@ -1,0 +1,25 @@
+version: "3"
+services: 
+  db:
+    image: postgres
+    environment: 
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB:
+      
+    ports: 
+      - "8001:5432"
+  manager:
+    build:
+      context: "./manager"
+    
+    environment:
+      CSV_FILENAME: /manager/data.csv
+      
+    image: "manager:latest"
+    
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - "db"
+  
